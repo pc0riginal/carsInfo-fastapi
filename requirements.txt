@@ -4,4 +4,3 @@ python-multipart
 pymongo
 Jinja2
 gunicorn
-hypercorn
