@@ -1,6 +1,0 @@
-fastapi
-uvicorn
-python-multipart
-pymongo
-Jinja2
-gunicorn
