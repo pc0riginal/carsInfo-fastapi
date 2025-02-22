@@ -1,0 +1,100 @@
+{% include 'header.html' %}
+{% include 'navbar.html' %}
+<div class="container mt-5">
+    <div class="row justify-content-center">
+        <div class="col-md-4">
+            <h1>Create a New Car</h1>
+            <form action="/cars" method="POST" enctype="multipart/form-data">
+                <div class="mb-3">
+                    <label for="make" class="form-label">Make</label>
+                    <input type="text" class="form-control" id="make" name="make" required>
+                </div>
+
+                <div class="mb-3">
+                    <label for="model" class="form-label">Model</label>
+                    <input type="text" class="form-control" id="model" name="model" required>
+                </div>
+
+                <div class="mb-3">
+                    <label for="year" class="form-label">Year</label>
+                    <input type="number" class="form-control" id="year" name="year" required>
+                </div>
+
+                <div class="mb-3">
+                    <label for="price" class="form-label">Price</label>
+                    <input type="number" class="form-control" id="price" name="price" step="0.01" required>
+                </div>
+
+                <div class="mb-3">
+                    <label for="engine" class="form-label">Engine</label>
+                    <input type="text" class="form-control" id="engine" name="engine" required>
+                </div>
+
+                <div class="mb-3">
+                    <label for="autonomous" class="form-label">Autonomous</label>
+                    <select class="form-control" id="autonomous" name="autonomous" required>
+                        <option value="true">Yes</option>
+                        <option value="false">No</option>
+                    </select>
+                </div>
+
+                <div class="mb-3">
+                    <label for="sold" class="form-label">Regions Sold</label>
+                    <div class="form-check">
+                        <input type="checkbox" class="form-check-input" id="AS" name="sold" value="AS">
+                        <label class="form-check-label" for="AS">Asia</label>
+                    </div>
+                    <div class="form-check">
+                        <input type="checkbox" class="form-check-input" id="OC" name="sold" value="OC">
+                        <label class="form-check-label" for="OC">Oceania</label>
+                    </div>
+                    <div class="form-check">
+                        <input type="checkbox" class="form-check-input" id="AN" name="sold" value="AN">
+                        <label class="form-check-label" for="AN">Antarctica</label>
+                    </div>
+                    <div class="form-check">
+                        <input type="checkbox" class="form-check-input" id="EU" name="sold" value="EU">
+                        <label class="form-check-label" for="EU">Europe</label>
+                    </div>
+                    <div class="form-check">
+                        <input type="checkbox" class="form-check-input" id="AF" name="sold" value="AF">
+                        <label class="form-check-label" for="AF">Africa</label>
+                    </div>
+                    <div class="form-check">
+                        <input type="checkbox" class="form-check-input" id="NA" name="sold" value="NA">
+                        <label class="form-check-label" for="NA">North America</label>
+                    </div>
+                    <div class="form-check">
+                        <input type="checkbox" class="form-check-input" id="SA" name="sold" value="SA">
+                        <label class="form-check-label" for="SA">South America</label>
+                    </div>
+                </div>
+                <div class="mb-3">
+                    <label for="image" class="form-label">Car Image</label>
+                    <input type="file" class="form-control" id="car_image" name="car_image" required>
+                </div>
+
+                <div class="mb-3">
+                    <label for="image-preview" class="form-label">Preview</label>
+                    <img id="image-preview" src="#" alt="Image Preview"
+                        style="display:none; max-width: 100%; height: auto;">
+                </div>
+
+                <button type="submit" class="btn btn-primary">Create Car</button>
+            </form>
+        </div>
+    </div>
+</div>
+<script>
+    // Function to preview the image before submission
+    document.getElementById("car_image").addEventListener("change", function (event) {
+        var reader = new FileReader();
+        reader.onload = function () {
+            var preview = document.getElementById("image-preview");
+            preview.src = reader.result;
+            preview.style.display = "block";  // Display the image preview
+        };
+        reader.readAsDataURL(event.target.files[0]);
+    });
+</script>
+{% include 'footer.html' %}
