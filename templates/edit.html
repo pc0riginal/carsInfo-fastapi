@@ -1,0 +1,91 @@
+{% include 'header.html' %}
+{% include 'navbar.html' %}
+<div class="container mt-5">
+    <div class="row justify-content-center">
+        <div class="col-md-4">
+            <h1>Edit Car</h1>
+            <form action="/edit/{{ car['car_id'] }}" method="POST" enctype="multipart/form-data">
+                <input type="hidden" name="_method" value="PUT">  <!-- Simulate PUT request -->
+                
+                <div class="mb-3">
+                    <label for="make" class="form-label">Make</label>
+                    <input type="text" class="form-control" id="make" name="make" value="{{ car['make'] }}" required>
+                </div>
+
+                <div class="mb-3">
+                    <label for="model" class="form-label">Model</label>
+                    <input type="text" class="form-control" id="model" name="model" value="{{ car['model'] }}" required>
+                </div>
+
+                <div class="mb-3">
+                    <label for="year" class="form-label">Year</label>
+                    <input type="number" class="form-control" id="year" name="year" value="{{ car['year'] }}" required>
+                </div>
+
+                <div class="mb-3">
+                    <label for="price" class="form-label">Price</label>
+                    <input type="number" class="form-control" id="price" name="price" step="0.01" value="{{ car['price'] }}" required>
+                </div>
+
+                <div class="mb-3">
+                    <label for="engine" class="form-label">Engine</label>
+                    <input type="text" class="form-control" id="engine" name="engine" value="{{ car['engine'] }}" required>
+                </div>
+
+                <div class="mb-3">
+                    <label for="autonomous" class="form-label">Autonomous</label>
+                    <select class="form-control" id="autonomous" name="autonomous" required>
+                        <option value="true" {% if car['autonomous'] %}selected{% endif %}>Yes</option>
+                        <option value="false" {% if not car['autonomous'] %}selected{% endif %}>No</option>
+                    </select>
+                </div>
+
+                {% set region_names = {
+                    "AS": "Asia",
+                    "OC": "Oceania",
+                    "AN": "Antarctica",
+                    "EU": "Europe",
+                    "AF": "Africa",
+                    "NA": "North America",
+                    "SA": "South America"
+                } %}
+                
+                <div class="mb-3">
+                    <label for="sold" class="form-label">Regions Sold</label>
+                    
+                    {% for code, name in region_names.items() %}
+                        <div class="form-check">
+                            <input type="checkbox" class="form-check-input" id="{{ code }}" name="sold" value="{{ code }}"
+                                {% if car['sold'] and code in car['sold'] %}checked{% endif %}>
+                            <label class="form-check-label" for="{{ code }}">{{ name }}</label>
+                        </div>
+                    {% endfor %}
+                </div>
+
+                <div class="mb-3">
+                    <label for="image" class="form-label">Car Image</label>
+                    <input type="file" class="form-control" id="car_image" name="car_image">
+                    {% if car['image'] %}
+                        <img id="image-preview" src="{{ url_for('static', path='images/' + car['image']) }}" alt="Car Image" style="max-width: 100%; height: auto;">
+                    {% else %}
+                        <img id="image-preview" src="#" alt="Image Preview" style="display:none; max-width: 100%; height: auto;">
+                    {% endif %}
+                </div>
+
+                <button type="submit" class="btn btn-primary">Update Car</button>
+            </form>
+        </div>
+    </div>
+</div>
+<script>
+    document.getElementById("car_image").addEventListener("change", function (event) {
+        var reader = new FileReader();
+        reader.onload = function () {
+            var preview = document.getElementById("image-preview");
+            preview.src = reader.result;
+            preview.style.display = "block";
+        };
+        reader.readAsDataURL(event.target.files[0]);
+    });
+</script>
+{% include 'footer.html' %}

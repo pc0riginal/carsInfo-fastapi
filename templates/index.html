@@ -1,0 +1,15 @@
+{% include 'header.html' %}
+{% include 'navbar.html' %}
+<h1 class="mt-1 mb-0">Cars</h1>
+<div class="card-container">
+    {% if cars %}
+        {% for car in cars %}
+            {% for id, car in car.items() %}
+                {% include 'car.html' %}
+            {% endfor %}
+        {% endfor %}
+    {% else %}
+        <p>Opp no car is found</p>
+    {% endif %}
+</div>
+{% include 'footer.html' %}
